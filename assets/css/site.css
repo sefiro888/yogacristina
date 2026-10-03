@@ -836,12 +836,15 @@ section { position: relative; }
 .dark .scan-small { color: var(--luz-3); margin-top: 1.2rem; }
 .scan-stage { position: relative; padding: clamp(1.1rem, 3vw, 2rem); border-radius: 28px; border: 1px solid var(--linea-d); background: radial-gradient(80% 70% at 50% 35%, rgba(251, 155, 7, .08), transparent 70%), rgba(255, 255, 255, .02); }
 .scan-body { width: 100%; height: auto; display: block; }
-.scan-mat { fill: rgba(126, 61, 57, .2); stroke: rgba(251, 155, 7, .14); stroke-width: 1.2; }
-.scan-body g > * { fill: rgba(247, 232, 204, .06); stroke: rgba(253, 197, 74, .5); stroke-width: 1.4; transition: fill 1.4s ease, stroke 1.4s ease; }
-.scan-body g.is-done > * { fill: rgba(251, 155, 7, .16); }
-.scan-body g.is-active > * { fill: rgba(251, 155, 7, .55); stroke: var(--oro); animation: scanGlow 3.2s ease-in-out infinite; }
-.scan-body g.is-active { filter: drop-shadow(0 0 12px rgba(251, 155, 7, .75)); }
-@keyframes scanGlow { 50% { fill: rgba(251, 155, 7, .32); } }
+.scan-mat { stroke: rgba(251, 155, 7, .16); stroke-width: 1; }
+.scan-mat-line { fill: none; stroke: rgba(253, 197, 74, .12); stroke-width: 1; stroke-dasharray: 2 7; }
+.scan-body [data-zone] { opacity: 0; transition: opacity 1.6s ease; }
+.scan-body [data-zone].is-done { opacity: .22; }
+.scan-body [data-zone].is-active { opacity: 1; animation: zoneBreath 4s ease-in-out infinite; }
+@keyframes zoneBreath { 50% { opacity: .62; } }
+.scan-outline { opacity: .85; }
+.scan-chakras circle { fill: var(--oro); opacity: .35; animation: chakra 3.6s ease-in-out infinite; animation-delay: calc(var(--k) * .35s); }
+@keyframes chakra { 50% { opacity: .85; } }
 .scan-panel { margin-top: 1.3rem; }
 .scan-step { margin: 0 0 .6rem; font-size: .76rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 650; color: var(--oro); }
 .scan-step b { color: var(--luz); letter-spacing: .1em; }

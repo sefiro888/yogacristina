@@ -99,15 +99,52 @@ export function pages(h) {
     ['rostro', 'Rostro', 'Relaja la frente, los ojos, las mejillas y los labios. El rostro se vuelve blando y sereno.'],
     ['todo', 'Todo el cuerpo', 'Siente el cuerpo entero a la vez, tranquilo y presente. Quédate aquí unos instantes.']
   ];
-  const bodySvg = `<svg class="scan-body" viewBox="0 0 620 230" role="img" aria-label="Silueta de una persona tumbada en postura de relajación">
-      <ellipse class="scan-mat" cx="310" cy="115" rx="300" ry="100"/>
-      <g data-zone="brazos"><rect x="152" y="46" width="150" height="20" rx="10"/><rect x="152" y="164" width="150" height="20" rx="10"/><circle cx="314" cy="56" r="12"/><circle cx="314" cy="174" r="12"/></g>
-      <g data-zone="piernas"><rect x="322" y="86" width="208" height="26" rx="13"/><rect x="322" y="118" width="208" height="26" rx="13"/></g>
-      <g data-zone="pies"><ellipse cx="546" cy="99" rx="15" ry="15"/><ellipse cx="546" cy="131" rx="15" ry="15"/></g>
-      <g data-zone="abdomen"><rect x="240" y="82" width="88" height="66" rx="28"/></g>
-      <g data-zone="pecho"><rect x="150" y="78" width="96" height="74" rx="30"/></g>
-      <g data-zone="cuello"><rect x="104" y="104" width="30" height="22" rx="8"/><path d="M130 82 Q140 74 156 78 L156 152 Q140 156 130 148 Z"/></g>
-      <g data-zone="rostro"><circle cx="78" cy="115" r="31"/></g>
+  const bodySvg = `<svg class="scan-body" viewBox="0 0 640 220" role="img" aria-label="Silueta de una persona tumbada en savasana sobre una esterilla">
+      <defs>
+        <g id="scan-shape" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke-width="0" d="M50 82c-14 1-26 10-29 22-3 13 4 26 17 32 9 4 19 4 28 1 12-4 21-15 21-28 0-15-12-27-28-28-3 0-6 0-9 1Z"/>
+          <ellipse stroke-width="0" cx="27" cy="109" rx="8" ry="10"/>
+          <path stroke-width="0" d="M84 100c8-2 18-2 26 0v18c-8 2-18 2-26 0Z"/>
+          <path stroke-width="0" d="M106 92c2-16 16-24 34-24 22 0 44 4 62 10 12 4 22 7 32 8 18-6 40-8 56-2 14 6 18 18 18 26s-4 20-18 26c-16 6-38 4-56-2-10 1-20 4-32 8-18 6-40 10-62 10-18 0-32-8-34-24-1-10-1-26 0-36Z"/>
+          <path fill="none" stroke-width="15" d="M132 76c22-10 46-16 70-19 26-3 52-5 76-6"/>
+          <path fill="none" stroke-width="15" d="M132 144c22 10 46 16 70 19 26 3 52 5 76 6"/>
+          <ellipse stroke-width="0" cx="292" cy="50" rx="15" ry="8.5" transform="rotate(-6 292 50)"/>
+          <ellipse stroke-width="0" cx="292" cy="170" rx="15" ry="8.5" transform="rotate(6 292 170)"/>
+          <path fill="none" stroke-width="30" d="M300 97c40-5 82-6 122-4"/>
+          <path fill="none" stroke-width="30" d="M300 123c40 5 82 6 122 4"/>
+          <path fill="none" stroke-width="19" d="M420 93c42 0 86-3 128-9"/>
+          <path fill="none" stroke-width="19" d="M420 127c42 0 86 3 128 9"/>
+          <ellipse stroke-width="0" cx="560" cy="80" rx="8" ry="13" transform="rotate(-24 560 80)"/>
+          <ellipse stroke-width="0" cx="560" cy="140" rx="8" ry="13" transform="rotate(24 560 140)"/>
+        </g>
+        <mask id="scan-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="220"><use href="#scan-shape" color="#fff"/></mask>
+        <filter id="scan-edge" filterUnits="userSpaceOnUse" x="0" y="0" width="640" height="220">
+          <feMorphology in="SourceAlpha" operator="dilate" radius="1.3" result="grow"/>
+          <feComposite in="grow" in2="SourceAlpha" operator="out" result="line"/>
+          <feFlood flood-color="#fdc54a" flood-opacity=".9"/>
+          <feComposite in2="line" operator="in" result="gold"/>
+          <feGaussianBlur in="gold" stdDeviation="2.2" result="soft"/>
+          <feMerge><feMergeNode in="soft"/><feMergeNode in="gold"/></feMerge>
+        </filter>
+        <radialGradient id="scan-light"><stop offset="0" stop-color="#fff4c9"/><stop offset=".35" stop-color="#fdc54a" stop-opacity=".9"/><stop offset=".7" stop-color="#f26a0c" stop-opacity=".45"/><stop offset="1" stop-color="#f26a0c" stop-opacity="0"/></radialGradient>
+        <linearGradient id="scan-skin" x1="0" x2="1"><stop offset="0" stop-color="#4a2c1c"/><stop offset=".5" stop-color="#3a2216"/><stop offset="1" stop-color="#4a2c1c"/></linearGradient>
+        <linearGradient id="scan-mat-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7e3d39" stop-opacity=".34"/><stop offset="1" stop-color="#5a2a22" stop-opacity=".22"/></linearGradient>
+      </defs>
+      <rect class="scan-mat" x="4" y="22" width="632" height="176" rx="26" fill="url(#scan-mat-g)"/>
+      <rect class="scan-mat-line" x="14" y="32" width="612" height="156" rx="19"/>
+      <use href="#scan-shape" color="#2c1910" class="scan-silhouette"/>
+      <g mask="url(#scan-mask)">
+        <rect width="640" height="220" fill="url(#scan-skin)"/>
+        <g data-zone="pies"><circle cx="558" cy="80" r="30" fill="url(#scan-light)"/><circle cx="558" cy="140" r="30" fill="url(#scan-light)"/></g>
+        <g data-zone="piernas"><ellipse cx="430" cy="110" rx="150" ry="64" fill="url(#scan-light)"/></g>
+        <g data-zone="abdomen"><ellipse cx="262" cy="110" rx="58" ry="56" fill="url(#scan-light)"/></g>
+        <g data-zone="pecho"><ellipse cx="168" cy="110" rx="64" ry="60" fill="url(#scan-light)"/></g>
+        <g data-zone="brazos"><ellipse cx="220" cy="56" rx="112" ry="26" fill="url(#scan-light)"/><ellipse cx="220" cy="164" rx="112" ry="26" fill="url(#scan-light)"/></g>
+        <g data-zone="cuello"><ellipse cx="108" cy="110" rx="34" ry="54" fill="url(#scan-light)"/></g>
+        <g data-zone="rostro"><ellipse cx="54" cy="109" rx="46" ry="42" fill="url(#scan-light)"/></g>
+      </g>
+      <use href="#scan-shape" color="#000" filter="url(#scan-edge)" class="scan-outline"/>
+      <g class="scan-chakras">${[[298, 110], [272, 110], [240, 110], [182, 110], [104, 109]].map(([x, y], k) => `<circle cx="${x}" cy="${y}" r="2.4" style="--k:${k}"/>`).join('')}</g>
     </svg>`;
   const scanSection = () => `<section class="scan dark" id="escaneo" data-glow>
   <canvas class="embers" aria-hidden="true"></canvas>
