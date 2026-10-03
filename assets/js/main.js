@@ -174,7 +174,6 @@
   /* ---------- 6. Cabecera ---------- */
   const header = $('.site-header');
   const bar = $('.header-progress span');
-  const dock = $('.dock');
   let lastY = scrollY;
   const onScrollHeader = () => {
     const y = scrollY;
@@ -186,12 +185,6 @@
       if (y > 520 && y > lastY + 6) header.classList.add('is-hidden');
       else if (y < lastY - 6 || y < 520) header.classList.remove('is-hidden');
     } else header.classList.remove('is-hidden');
-    // barra inferior del móvil: se esconde al bajar y vuelve al subir o al llegar al final
-    if (dock) {
-      const atEnd = y > max - 40;
-      if (y > 300 && y > lastY + 6 && !atEnd) { dock.classList.add('is-away'); root.classList.add('dock-away'); }
-      else if (y < lastY - 6 || y < 300 || atEnd) { dock.classList.remove('is-away'); root.classList.remove('dock-away'); }
-    }
     lastY = y;
   };
 
