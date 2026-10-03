@@ -1,0 +1,9 @@
+{
+  "name": "Escuela de Yoga Cristina Herrera",
+  "short_name": "Yoga Cristina",
+  "icons": [{ "src": "assets/img/marca/icon-512.png", "sizes": "512x512", "type": "image/png" }],
+  "theme_color": "#120a07",
+  "background_color": "#120a07",
+  "display": "standalone",
+  "start_url": "index.html"
+}

@@ -1,0 +1,2 @@
+// Generado por scripts/build.mjs: no editar a mano
+window.CH = {"wa":"34606380745","hours":[{"d":1,"name":"Lunes","slots":[["08:30","10:30"],["16:30","22:30"]]},{"d":2,"name":"Martes","slots":[["08:00","10:30"],["16:30","20:30"]]},{"d":3,"name":"Miércoles","slots":[["08:30","10:30"],["16:30","22:30"]]},{"d":4,"name":"Jueves","slots":[["08:00","10:30"],["16:30","20:30"]]},{"d":5,"name":"Viernes","slots":[["08:30","10:30"]]},{"d":6,"name":"Sábado","slots":[]},{"d":0,"name":"Domingo","slots":[]}]};

@@ -1,0 +1,4 @@
+# PNG originales de la carpeta (la web usa las versiones optimizadas de assets/img)
+/*.png
+.claude/
+node_modules/

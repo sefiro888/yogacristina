@@ -1,0 +1,8 @@
+Tipografías incluidas en la web (subconjunto latino, versiones variables):
+
+- Fraunces (Undercase Type, Phaedra Charles y Flavia Zimbardi) · SIL Open Font License 1.1
+  https://fonts.google.com/specimen/Fraunces/license
+- Figtree (Erik Kennedy) · SIL Open Font License 1.1
+  https://fonts.google.com/specimen/Figtree/license
+
+Descargadas de Google Fonts y servidas desde la propia web para no enviar datos de los visitantes a terceros.
