@@ -994,7 +994,7 @@ mark.pending { background: rgba(242, 106, 12, .12); color: var(--acento); paddin
   .phero-energy { position: relative; right: auto; bottom: auto; width: auto; max-width: 420px; margin: 0 1.25rem; }
   .phero { flex-direction: column; justify-content: flex-end; align-items: stretch; gap: 1.6rem; padding-bottom: 6.6rem; }
   .phero .wrap { width: calc(100% - 2.5rem); }
-  .hero-index { left: 1.25rem; right: 1.25rem; bottom: 5.4rem; gap: .8rem; overflow: hidden; }
+  .hero-index { left: 6.6rem; right: 1.25rem; bottom: 5.4rem; gap: .8rem; overflow: hidden; }
   .hero-index button { min-width: 0; flex: 1; }
   .hero-index .hi-l { display: none; }
   .hero { padding-bottom: 8.5rem; align-items: flex-end; }

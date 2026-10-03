@@ -190,7 +190,7 @@ export function pages(h) {
     const svcClasses = CLASSES.filter(c => c.slug === s.slug);
     const body = `
 <section class="phero dark" data-glow>
-  <div class="phero-media">${pic(s.hero, { alt: strip(s.title) + ' en la Escuela de Yoga Cristina Herrera', eager: true, pos: s.heroPos, cls: 'kenburns' })}</div>
+  <div class="phero-media">${pic(s.hero, { alt: strip(s.title) + ' en la Escuela de Yoga Cristina Herrera', eager: true, pos: s.heroPos, cls: 'kenburns', sizes: '(orientation: portrait) 170vh, 100vw' })}</div>
   <div class="phero-scrim" aria-hidden="true"></div>
   <canvas class="embers" aria-hidden="true"></canvas>
   <div class="wrap phero-in">
@@ -363,7 +363,7 @@ ${s.slug === 'yoga-nidra' ? scanSection() : ''}
   }, `
 <section class="hero dark" data-glow data-hero>
   <div class="hero-slides">
-    ${slides.map((sl, i) => `<div class="hero-slide${i === 0 ? ' is-active' : ''}" data-label="${sl.label}">${pic(sl.img, { alt: '', eager: i === 0, pos: sl.pos, cls: 'kenburns' })}</div>`).join('\n    ')}
+    ${slides.map((sl, i) => `<div class="hero-slide${i === 0 ? ' is-active' : ''}" data-label="${sl.label}">${pic(sl.img, { alt: '', eager: i === 0, pos: sl.pos, cls: 'kenburns', sizes: '(orientation: portrait) 170vh, 100vw' })}</div>`).join('\n    ')}
   </div>
   <div class="hero-scrim" aria-hidden="true"></div>
   <canvas class="embers" aria-hidden="true" data-count="46"></canvas>
@@ -567,7 +567,7 @@ ${reviewsBlock()}
     desc: 'Cristina Herrera, instructora y profesora de yoga diplomada por la Escuela Internacional de Yoga. Su historia, su filosofía y su escuela en Cieza.'
   }, `
 <section class="phero dark" data-glow>
-  <div class="phero-media">${pic('manos-guian', { alt: 'Manos de la profesora guiando la práctica de una alumna', eager: true, pos: '40% 45%', cls: 'kenburns' })}</div>
+  <div class="phero-media">${pic('manos-guian', { alt: 'Manos de la profesora guiando la práctica de una alumna', eager: true, pos: '40% 45%', cls: 'kenburns', sizes: '(orientation: portrait) 170vh, 100vw' })}</div>
   <div class="phero-scrim" aria-hidden="true"></div>
   <canvas class="embers" aria-hidden="true"></canvas>
   <div class="wrap phero-in">
@@ -669,7 +669,7 @@ ${reviewsBlock('Lo que dicen de <em>Cristina</em>')}
     desc: 'Reserva tu clase de yoga en Cieza por WhatsApp. C. de José Planes, 4 · 606 38 07 45. Horario, mapa y preguntas frecuentes.'
   }, `
 <section class="phero phero-short dark" data-glow>
-  <div class="phero-media">${pic('rincon-calido', { alt: 'Rincón de la sala de yoga con cojines y luz cálida', eager: true, pos: '50% 60%', cls: 'kenburns' })}</div>
+  <div class="phero-media">${pic('rincon-calido', { alt: 'Rincón de la sala de yoga con cojines y luz cálida', eager: true, pos: '50% 60%', cls: 'kenburns', sizes: '(orientation: portrait) 170vh, 100vw' })}</div>
   <div class="phero-scrim" aria-hidden="true"></div>
   <canvas class="embers" aria-hidden="true"></canvas>
   <div class="wrap phero-in">
