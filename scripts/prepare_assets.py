@@ -87,6 +87,10 @@ def fotos() -> None:
                 im = src.resize((ancho, round(h * ancho / w)), Image.LANCZOS)
                 im = im.filter(ImageFilter.UnsharpMask(radius=0.8, percent=40, threshold=2))
             save_webp(im, dst / f"{nombre}-{ancho}.webp", 80 if ancho >= 1600 else 82)
+        # Miniatura cuadrada para el menú y las listas (círculos de 46–64 px)
+        s = min(w, h)
+        thumb = src.crop(((w - s) // 2, (h - s) // 2, (w - s) // 2 + s, (h - s) // 2 + s)).resize((160, 160), Image.LANCZOS)
+        save_webp(thumb, dst / f"{nombre}-160.webp", 78)
         print("foto", nombre, w, "x", h)
     (dst / "dims.json").write_text(json.dumps(dims, indent=1), encoding="utf-8")
 

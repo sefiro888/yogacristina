@@ -13,6 +13,7 @@ const v = Date.now().toString(36);
 /* ---------- utilidades ---------- */
 export const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 export const strip = s => String(s).replace(/<[^>]+>/g, '');
+export const HERO_SIZES = '(orientation: portrait) 150vh, 100vw';
 export const waUrl = text => `https://wa.me/${SITE.wa}?text=${encodeURIComponent(text)}`;
 
 export const waMsg = s => {
@@ -24,11 +25,16 @@ export const waMsg = s => {
 };
 
 /** Imagen responsive con srcset (600 / 1000 / 1600 / 2400 px). */
-export const pic = (name, { sizes = '100vw', alt = '', cls = '', eager = false, pos = '', attrs = '' } = {}) => {
+export const srcsetOf = name => [600, 1000, 1600, 2400].map(n => `assets/img/fotos/${name}-${n}.webp ${n}w`).join(', ');
+export const pic = (name, { sizes = '100vw', alt = '', cls = '', eager = false, defer = false, pos = '', attrs = '' } = {}) => {
   const [w, h] = dims[name] || [1600, 1067];
-  const src = n => `assets/img/fotos/${name}-${n}.webp`;
-  return `<img class="${cls}" src="${src(1600)}" srcset="${[600, 1000, 1600, 2400].map(n => `${src(n)} ${n}w`).join(', ')}" sizes="${sizes}" alt="${esc(alt)}" width="${w}" height="${h}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"${pos ? ` style="object-position:${pos}"` : ''}${attrs}>`;
+  const src = `assets/img/fotos/${name}-1600.webp`;
+  // defer: la imagen no se descarga hasta que el JS la pide (fotos 2–5 del pase de la portada)
+  const s = defer ? `data-src="${src}" data-srcset="${srcsetOf(name)}"` : `src="${src}" srcset="${srcsetOf(name)}"`;
+  return `<img class="${cls}" ${s} sizes="${sizes}" alt="${esc(alt)}" width="${w}" height="${h}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"${pos ? ` style="object-position:${pos}"` : ''}${attrs}>`;
 };
+/** Miniatura cuadrada de 160 px para círculos pequeños (menú, listas). */
+export const thumb = name => `<img src="assets/img/fotos/${name}-160.webp" alt="" width="160" height="160" loading="lazy" decoding="async">`;
 
 /** Adorno de la lámina «Motivos dorados» en su propio espacio, con animación propia. */
 export const orn = (name, cls = '', w = 160) => `<img class="orn orn-${name} ${cls}" src="assets/img/adornos/${name}.webp" alt="" width="${w}" height="${w}" loading="lazy" decoding="async" aria-hidden="true">`;
@@ -89,7 +95,7 @@ const NAV_MAIN = [
   ['contacto', 'contacto.html', 'Contacto']
 ];
 
-const megaItem = s => `<a class="mega-item" href="${s.file}"><span class="mega-thumb">${pic(s.card, { sizes: '56px', alt: '' })}</span><span><b>${s.name}</b><small>${s.menu}</small></span></a>`;
+const megaItem = s => `<a class="mega-item" href="${s.file}"><span class="mega-thumb">${thumb(s.card)}</span><span><b>${s.name}</b><small>${s.menu}</small></span></a>`;
 
 const header = meta => `<header class="site-header">
   <div class="header-progress" aria-hidden="true"><span></span></div>
@@ -98,7 +104,7 @@ const header = meta => `<header class="site-header">
       <span class="brand-seal"><img src="assets/img/marca/sello-180.webp" width="180" height="180" alt=""></span>
       <span class="brand-txt"><b>Cristina Herrera</b><small>Escuela de yoga · Cieza</small></span>
     </a>
-    <nav class="nav" id="nav" aria-label="Principal">
+    <nav class="nav" id="nav" aria-label="Principal" data-lenis-prevent>
       <a href="index.html"${meta.nav === 'inicio' ? ' aria-current="page"' : ''}>Inicio</a>
       <div class="nav-drop">
         <button class="drop-btn" type="button" aria-expanded="false" aria-controls="mega"${meta.nav === 'servicio' ? ' data-current' : ''}>Prácticas ${icon('down')}</button>
@@ -201,6 +207,7 @@ const layout = (meta, body, file) => `<!doctype html>
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+${meta.lcp ? `<link rel="preload" as="image" href="assets/img/fotos/${meta.lcp}-1600.webp" imagesrcset="${srcsetOf(meta.lcp)}" imagesizes="${HERO_SIZES}" fetchpriority="high">` : ''}
 <link rel="preload" href="assets/fonts/fraunces-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/figtree-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css?v=${v}">
@@ -250,7 +257,7 @@ ${footer()}
 fs.writeFileSync(path.join(root, 'assets/js/data.js'), `// Generado por scripts/build.mjs: no editar a mano
 window.CH = ${JSON.stringify({ wa: SITE.wa, hours: SITE.hours.map(d => ({ d: d.d, name: d.name, slots: d.slots })) })};
 `);
-const helpers = { SITE, SERVICES, BY_SLUG, REVIEWS, PILLARS, CLASSES, pic, orn, icon, mandala, waUrl, waMsg, esc, strip };
+const helpers = { SITE, SERVICES, BY_SLUG, REVIEWS, PILLARS, CLASSES, HERO_SIZES, pic, thumb, orn, icon, mandala, waUrl, waMsg, esc, strip };
 let n = 0;
 for (const page of pages(helpers)) {
   fs.writeFileSync(path.join(root, page.file), layout(page.meta, page.body.trim(), page.file));

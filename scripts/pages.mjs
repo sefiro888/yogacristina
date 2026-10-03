@@ -1,6 +1,6 @@
 // Plantillas de cada página. Recibe las utilidades desde build.mjs.
 export function pages(h) {
-  const { SITE, SERVICES, BY_SLUG, REVIEWS, PILLARS, CLASSES, pic, orn, icon, mandala, waUrl, waMsg, esc, strip } = h;
+  const { SITE, SERVICES, BY_SLUG, REVIEWS, PILLARS, CLASSES, HERO_SIZES, pic, thumb, orn, icon, mandala, waUrl, waMsg, esc, strip } = h;
   const out = [];
   const add = (file, meta, body) => out.push({ file, meta, body });
 
@@ -190,7 +190,7 @@ export function pages(h) {
     const svcClasses = CLASSES.filter(c => c.slug === s.slug);
     const body = `
 <section class="phero dark" data-glow>
-  <div class="phero-media">${pic(s.hero, { alt: strip(s.title) + ' en la Escuela de Yoga Cristina Herrera', eager: true, pos: s.heroPos, cls: 'kenburns', sizes: '(orientation: portrait) 170vh, 100vw' })}</div>
+  <div class="phero-media">${pic(s.hero, { alt: strip(s.title) + ' en la Escuela de Yoga Cristina Herrera', eager: true, pos: s.heroPos, cls: 'kenburns', sizes: HERO_SIZES })}</div>
   <div class="phero-scrim" aria-hidden="true"></div>
   <canvas class="embers" aria-hidden="true"></canvas>
   <div class="wrap phero-in">
@@ -322,7 +322,7 @@ ${s.slug === 'yoga-nidra' ? scanSection() : ''}
   </div>
 </section>`;
     add(s.file, {
-      key: 'servicio servicio-' + s.slug, nav: 'servicio', service: s,
+      key: 'servicio servicio-' + s.slug, nav: 'servicio', service: s, lcp: s.hero,
       title: `${({ 'yoga-ninos-adolescentes': 'Yoga para niños y adolescentes en Cieza', talleres: 'Talleres de yoga en Cieza', retiros: 'Retiros de yoga', 'sesiones-privadas': 'Sesiones privadas de yoga en Cieza' })[s.slug] || s.name + ' en Cieza'} · Escuela de Yoga Cristina Herrera`, desc: s.desc
     }, body);
   }
@@ -357,13 +357,13 @@ ${s.slug === 'yoga-nidra' ? scanSection() : ''}
   });
 
   add('index.html', {
-    key: 'inicio', nav: 'inicio', ld: ldIndex,
+    key: 'inicio', nav: 'inicio', ld: ldIndex, lcp: 'meditacion-ambar',
     title: 'Escuela de Yoga Cristina Herrera · Yoga en Cieza (Murcia)',
     desc: 'Escuela de yoga en Cieza: Hatha Vinyasa, yoga restaurativo, Yoga Nidra, meditación, mantras, yoga para niños, talleres y retiros. Reserva por WhatsApp.'
   }, `
 <section class="hero dark" data-glow data-hero>
   <div class="hero-slides">
-    ${slides.map((sl, i) => `<div class="hero-slide${i === 0 ? ' is-active' : ''}" data-label="${sl.label}">${pic(sl.img, { alt: '', eager: i === 0, pos: sl.pos, cls: 'kenburns', sizes: '(orientation: portrait) 170vh, 100vw' })}</div>`).join('\n    ')}
+    ${slides.map((sl, i) => `<div class="hero-slide${i === 0 ? ' is-active' : ''}" data-label="${sl.label}">${pic(sl.img, { alt: '', eager: i === 0, defer: i > 0, pos: sl.pos, cls: 'kenburns', sizes: HERO_SIZES })}</div>`).join('\n    ')}
   </div>
   <div class="hero-scrim" aria-hidden="true"></div>
   <canvas class="embers" aria-hidden="true" data-count="46"></canvas>
@@ -396,7 +396,7 @@ ${s.slug === 'yoga-nidra' ? scanSection() : ''}
   <div class="wrap school-grid">
     <div class="school-visual reveal" data-reveal="zoom">
       ${mandala('mandala-ring')}
-      <div class="school-seal"><span class="seal-halo"></span><img src="assets/img/marca/sello-720.webp" width="720" height="720" alt="Logotipo de la Escuela de Yoga Cristina Herrera: OM dorado sobre círculo negro"></div>
+      <div class="school-seal"><span class="seal-halo"></span><img src="assets/img/marca/sello-720.webp" width="720" height="720" loading="lazy" decoding="async" alt="Logotipo de la Escuela de Yoga Cristina Herrera: OM dorado sobre círculo negro"></div>
       ${orn('luna', 'orn-float school-moon', 110)}
     </div>
     <div class="school-text">
@@ -562,12 +562,12 @@ ${reviewsBlock()}
 
   /* ---------- SOBRE CRISTINA ---------- */
   add('sobre-cristina.html', {
-    key: 'sobre', nav: 'sobre',
+    key: 'sobre', nav: 'sobre', lcp: 'manos-guian',
     title: 'Sobre Cristina Herrera · Escuela de Yoga en Cieza',
     desc: 'Cristina Herrera, instructora y profesora de yoga diplomada por la Escuela Internacional de Yoga. Su historia, su filosofía y su escuela en Cieza.'
   }, `
 <section class="phero dark" data-glow>
-  <div class="phero-media">${pic('manos-guian', { alt: 'Manos de la profesora guiando la práctica de una alumna', eager: true, pos: '40% 45%', cls: 'kenburns', sizes: '(orientation: portrait) 170vh, 100vw' })}</div>
+  <div class="phero-media">${pic('manos-guian', { alt: 'Manos de la profesora guiando la práctica de una alumna', eager: true, pos: '40% 45%', cls: 'kenburns', sizes: HERO_SIZES })}</div>
   <div class="phero-scrim" aria-hidden="true"></div>
   <canvas class="embers" aria-hidden="true"></canvas>
   <div class="wrap phero-in">
@@ -643,7 +643,7 @@ ${reviewsBlock()}
   <div class="wrap">
     ${sectionHead({ kicker: 'Lo que enseña', title: 'Una escuela, <em>muchas puertas</em> de entrada', lead: 'Cada persona puede acercarse al yoga desde el movimiento, el descanso o la presencia.', ornName: 'mandala', center: true })}
     <div class="teach-grid">
-      ${SERVICES.map((s, i) => `<a class="teach-item reveal" style="--d:${i % 3}" href="${s.file}"><span class="teach-media">${pic(s.card, { sizes: '96px', alt: '' })}</span><span><b>${s.name}</b><small>${s.menu}</small></span>${icon('arrow')}</a>`).join('\n      ')}
+      ${SERVICES.map((s, i) => `<a class="teach-item reveal" style="--d:${i % 3}" href="${s.file}"><span class="teach-media">${thumb(s.card)}</span><span><b>${s.name}</b><small>${s.menu}</small></span>${icon('arrow')}</a>`).join('\n      ')}
     </div>
   </div>
 </section>
@@ -664,12 +664,12 @@ ${reviewsBlock('Lo que dicen de <em>Cristina</em>')}
 
   /* ---------- CONTACTO ---------- */
   add('contacto.html', {
-    key: 'contacto', nav: 'contacto',
+    key: 'contacto', nav: 'contacto', lcp: 'rincon-calido',
     title: 'Contacto y reservas · Escuela de Yoga Cristina Herrera (Cieza)',
     desc: 'Reserva tu clase de yoga en Cieza por WhatsApp. C. de José Planes, 4 · 606 38 07 45. Horario, mapa y preguntas frecuentes.'
   }, `
 <section class="phero phero-short dark" data-glow>
-  <div class="phero-media">${pic('rincon-calido', { alt: 'Rincón de la sala de yoga con cojines y luz cálida', eager: true, pos: '50% 60%', cls: 'kenburns', sizes: '(orientation: portrait) 170vh, 100vw' })}</div>
+  <div class="phero-media">${pic('rincon-calido', { alt: 'Rincón de la sala de yoga con cojines y luz cálida', eager: true, pos: '50% 60%', cls: 'kenburns', sizes: HERO_SIZES })}</div>
   <div class="phero-scrim" aria-hidden="true"></div>
   <canvas class="embers" aria-hidden="true"></canvas>
   <div class="wrap phero-in">

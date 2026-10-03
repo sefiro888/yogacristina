@@ -94,7 +94,7 @@
       setTimeout(startReveals, 250);
       setTimeout(() => root.classList.remove('show-intro'), 1200);
     };
-    const t = setTimeout(finish, 2900);
+    const t = setTimeout(finish, 1700);
     intro.addEventListener('click', () => { clearTimeout(t); finish(); });
     addEventListener('keydown', () => { clearTimeout(t); finish(); }, { once: true });
   } else {
@@ -148,8 +148,23 @@
     root.style.setProperty('--vy', e.clientY + 'px');
     root.classList.add('is-leaving');
     store('ch-nav', '1');
-    setTimeout(() => { location.href = a.href; }, 640);
+    setTimeout(() => { location.href = a.href; }, 380);
   });
+  // Precarga la página de destino al pasar el ratón o al tocar el enlace: la navegación es casi instantánea
+  const prefetched = new Set();
+  const prefetch = e => {
+    const a = e.target.closest && e.target.closest('a[href$=".html"], a[href*=".html#"]');
+    if (!a || a.target === '_blank') return;
+    const u = a.href.split('#')[0];
+    if (prefetched.has(u) || u === location.href.split('#')[0]) return;
+    prefetched.add(u);
+    const l = document.createElement('link');
+    l.rel = 'prefetch'; l.href = u;
+    document.head.append(l);
+  };
+  document.addEventListener('pointerover', prefetch, { passive: true });
+  document.addEventListener('touchstart', prefetch, { passive: true });
+
   // Llegada con ancla desde otra página
   if (location.hash) {
     const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
@@ -212,17 +227,21 @@
     let idx = 0;
     const dur = 6500;
     root.style.setProperty('--slide', dur / 1000 + 's');
+    const prime = n => {
+      const img = $('img', slides[(n + slides.length) % slides.length]);
+      if (img && img.dataset.srcset) { img.srcset = img.dataset.srcset; img.src = img.dataset.src; delete img.dataset.srcset; }
+    };
     const go = n => {
       slides[idx].classList.remove('is-active');
       marks[idx] && marks[idx].classList.remove('is-active');
       idx = (n + slides.length) % slides.length;
-      const img = $('img', slides[idx]);
-      if (img && img.loading === 'lazy') img.loading = 'eager';
+      prime(idx);
       slides[idx].classList.add('is-active');
+      setTimeout(() => prime(idx + 1), 1500);
       if (marks[idx]) { void marks[idx].offsetWidth; marks[idx].classList.add('is-active'); }
     };
-    // precarga discreta del resto de fotos
-    setTimeout(() => slides.forEach(s => { const i = $('img', s); if (i) i.loading = 'eager'; }), 2500);
+    // la segunda foto se pide cuando la página ya ha cargado
+    addEventListener('load', () => setTimeout(() => prime(1), 800), { once: true });
     let timer = setInterval(() => go(idx + 1), dur);
     document.addEventListener('visibilitychange', () => {
       clearInterval(timer);
@@ -283,7 +302,7 @@
         w = r.width; h = r.height;
         cv.width = w * dpr; cv.height = h * dpr;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        const n = +cv.dataset.count || clamp(Math.round(w * h / 30000), 12, 38);
+        const n = Math.min(+cv.dataset.count || 99, innerWidth < 700 ? 16 : 38, Math.max(10, Math.round(w * h / 30000)));
         parts = Array.from({ length: n }, () => make(true));
       };
       const tick = () => {
