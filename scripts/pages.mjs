@@ -886,6 +886,123 @@ ${reviewsBlock('Lo que dicen de <em>Cristina</em>')}
       <h2>4. Cómo controlarlo</h2>
       <p>Puedes borrar el almacenamiento y las cookies, o bloquearlos, desde la configuración de tu navegador (Chrome, Safari, Firefox o Edge).</p>`);
 
+  /* ---------- GUÍA PARA CRISTINA (no enlazada desde el menú) ---------- */
+  const PENDIENTES = [
+    ['horario', 'El horario real de clases', 'Qué práctica das cada día y a qué hora. Lo marcado como «Ejemplo» es inventado; solo el yoga para niños (L y X, 17:30) es real.'],
+    ['precios', 'Precios o bonos', 'Si quieres que aparezcan en la web.'],
+    ['fotos', 'Fotos tuyas y de la sala', 'Con 4 o 5 fotos reales la web gana muchísimo, sobre todo «Sobre Cristina».'],
+    ['trayectoria', 'Tu trayectoria', 'Escuela Internacional de Yoga, clases en Cieza desde 2016, la clase de Abarán en 2020. ¿Es correcto?'],
+    ['legal', 'Datos para la parte legal', 'Nombre o razón social y NIF: es obligatorio en España.'],
+    ['whatsapp', 'Tu número de WhatsApp', '¿Las reservas te llegan al 606 38 07 45?']
+  ];
+  add('guia.html', {
+    key: 'guia', nav: '', title: 'Guía de tu nueva web · Escuela de Yoga Cristina Herrera',
+    desc: 'Guía rápida de la web de demostración de la Escuela de Yoga Cristina Herrera.'
+  }, `
+<section class="legal-hero guide-hero dark" data-glow>
+  <canvas class="embers" aria-hidden="true"></canvas>
+  ${mandala('mandala-bg mandala-right')}
+  <div class="wrap guide-hero-in">
+    <div class="guide-seal"><span class="seal-halo"></span><img src="assets/img/marca/sello-360.webp" width="360" height="360" alt="Sello de la Escuela de Yoga Cristina Herrera"></div>
+    <p class="kicker kicker-light">Guía rápida para Cristina</p>
+    <h1 class="split">Así funciona <em>tu nueva web</em></h1>
+    <p class="legal-lead">Hola, Cristina 🙏 Esta es la demostración de cómo podría ser la web de tu escuela. En cinco minutos te cuento qué tiene, cómo te llegan las reservas y qué necesito de ti para dejarla lista.</p>
+    <div class="phero-cta"><a class="btn btn-glow btn-lg" href="index.html">Abrir la web ${icon('arrow')}</a></div>
+    <p class="guide-note">Es una versión de prueba: lleva una etiqueta «Demo» y no aparece en Google. Algunas fotos y los horarios son de ejemplo.</p>
+  </div>
+</section>
+
+<section class="guide light">
+  <div class="wrap guide-in">
+    <div class="guide-step reveal"><span class="guide-n">1</span><div>
+      <h2>Qué tiene la web</h2>
+      <p>Una portada que presenta tu escuela y tu filosofía, una página para cada práctica, otra sobre ti y otra de contacto con mapa y preguntas frecuentes.</p>
+    </div></div>
+    <div class="guide-pages">
+      <a class="teach-item reveal" href="index.html"><span class="teach-media"><img src="assets/img/marca/sello-180.webp" alt="" width="180" height="180"></span><span><b>Portada</b><small>Escuela, prácticas, opiniones y horario</small></span>${icon('arrow')}</a>
+      ${SERVICES.map((s, i) => `<a class="teach-item reveal" style="--d:${i % 3}" href="${s.file}"><span class="teach-media">${thumb(s.card)}</span><span><b>${s.name}</b><small>${s.menu}</small></span>${icon('arrow')}</a>`).join('\n      ')}
+      <a class="teach-item reveal" href="sobre-cristina.html"><span class="teach-media">${thumb('manos-guian')}</span><span><b>Sobre Cristina</b><small>Tu trayectoria y tu forma de enseñar</small></span>${icon('arrow')}</a>
+      <a class="teach-item reveal" href="contacto.html"><span class="teach-media">${thumb('rincon-calido')}</span><span><b>Contacto</b><small>WhatsApp, mapa y preguntas</small></span>${icon('arrow')}</a>
+    </div>
+  </div>
+</section>
+
+<section class="guide sand">
+  <div class="wrap guide-in">
+    <div class="guide-step reveal"><span class="guide-n">2</span><div>
+      <h2>Cómo te reservan: <em>todo llega a tu WhatsApp</em></h2>
+      <p>Sin formularios complicados ni pagos. La persona pulsa un botón y se le abre WhatsApp con el mensaje ya escrito para ti. Tú contestas como siempre. La web no guarda ningún dato.</p>
+    </div></div>
+    <div class="guide-grid3">
+      <article class="guide-card reveal"><span class="benefit-ico">${icon('wa')}</span><h3>Botones «Reservar»</h3><p>En todas las páginas. El mensaje dice qué práctica le interesa.</p><div class="bubble"><p>¡Hola, Cristina! 🙏 Me gustaría reservar una clase de Hatha Vinyasa. ¿Qué días y horarios tenéis disponibles?</p><span class="bubble-time">ahora ✓✓</span></div></article>
+      <article class="guide-card reveal" style="--d:1"><span class="benefit-ico">${icon('clock')}</span><h3>«Reservar esta clase»</h3><p>En el horario, cada clase tiene su botón con el día y la hora.</p><div class="bubble"><p>¡Hola, Cristina! 🙏 Me gustaría reservar la clase de Yoga Nidra del viernes a las 9:00. ¿Queda plaza?</p><span class="bubble-time">ahora ✓✓</span></div><a class="link-arrow" href="index.html#horario">Ver el horario ${icon('arrow')}</a></article>
+      <article class="guide-card reveal" style="--d:2"><span class="benefit-ico">${icon('feather')}</span><h3>Formulario rápido</h3><p>Nombre, horario preferido y si es su primera vez (en niños, la edad). Ve el mensaje antes de enviarlo.</p><a class="link-arrow" href="hatha-vinyasa.html#reserva">Probar una reserva ${icon('arrow')}</a></article>
+    </div>
+  </div>
+</section>
+
+<section class="guide dark" data-glow>
+  <canvas class="embers" aria-hidden="true"></canvas>
+  <div class="wrap guide-in">
+    <div class="guide-step reveal"><span class="guide-n">3</span><div>
+      <h2>Detalles para que <em>la gente se quede</em></h2>
+      <p>Pequeñas experiencias que transmiten la calma de tus clases antes de que vengan.</p>
+    </div></div>
+    <div class="guide-grid4">
+      <a class="benefit reveal" href="index.html#encuentra"><span class="benefit-ico">${icon('compass')}</span><h3>¿Qué necesitas hoy?</h3><p>Un test que recomienda una práctica según lo que busca cada persona.</p><span class="link-arrow">Probarlo ${icon('arrow')}</span></a>
+      <a class="benefit reveal" style="--d:1" href="index.html#respira"><span class="benefit-ico">${icon('wind')}</span><h3>Respira con nosotros</h3><p>Respiración guiada con un círculo de luz y sonido de cuenco tibetano.</p><span class="link-arrow">Probarlo ${icon('arrow')}</span></a>
+      <a class="benefit reveal" style="--d:2" href="yoga-nidra.html#escaneo"><span class="benefit-ico">${icon('moon')}</span><h3>Escaneo corporal</h3><p>En Yoga Nidra: dos minutos de relajación guiada para probar la experiencia.</p><span class="link-arrow">Probarlo ${icon('arrow')}</span></a>
+      <a class="benefit reveal" style="--d:3" href="index.html#horario"><span class="benefit-ico">${icon('clock')}</span><h3>Horario en vivo</h3><p>Indica si la escuela está abierta ahora y cuál es la próxima clase.</p><span class="link-arrow">Verlo ${icon('arrow')}</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="guide light" id="pendiente">
+  <div class="wrap guide-in">
+    <div class="guide-step reveal"><span class="guide-n">4</span><div>
+      <h2>Lo que necesito <em>que me confirmes</em></h2>
+      <p>Marca lo que ya tienes preparado y pulsa el botón: me llegará la lista por WhatsApp para que lo veamos juntos.</p>
+    </div></div>
+    <form class="guide-check reveal" data-guide-check>
+      ${PENDIENTES.map(([k, t, d]) => `<label class="check-item"><input type="checkbox" name="${k}" data-label="${esc(t)}"><span class="check-box" aria-hidden="true">${icon('check')}</span><span><b>${t}</b><small>${d}</small></span></label>`).join('\n      ')}
+      <label class="field field-wide"><span>¿Algo que quieras cambiar? <small>(opcional)</small></span><textarea name="nota" rows="2" placeholder="Textos, colores, fotos…"></textarea></label>
+      <div class="guide-check-foot"><p class="guide-count"><b data-guide-count>0</b> de ${PENDIENTES.length} listos</p><button class="btn btn-glow btn-lg" type="submit">${icon('wa')} Responder por WhatsApp</button></div>
+    </form>
+  </div>
+</section>
+
+<section class="guide sand">
+  <div class="wrap guide-in">
+    <div class="guide-step reveal"><span class="guide-n">5</span><div>
+      <h2>Una idea para más adelante: <em>tu agenda</em></h2>
+      <p>Apuntas tus talleres y retiros en una hoja sencilla desde el móvil (fecha, hora, título, plazas libres y precio) y la web los muestra solos, con su botón de reserva. Cuando pasa la fecha, desaparecen; si las plazas libres llegan a cero, aparece «Completo». Tu única tarea: bajar el número de plazas libres al confirmar cada reserva.</p>
+    </div></div>
+    <div class="guide-event reveal" data-reveal="zoom">
+      <span class="tt-badge">Ejemplo</span>
+      <div class="guide-event-date"><b>14</b><span>nov</span></div>
+      <div class="guide-event-body">
+        <small>Taller · Sábado 10:00–13:00</small>
+        <h3>Yoga &amp; Brunch &amp; Nidra</h3>
+        <p>Práctica suave, brunch consciente y relajación guiada.</p>
+        <div class="guide-seats"><span style="--p:.66"></span></div>
+        <p class="guide-seats-txt">8 de 12 plazas libres · faltan 5 días</p>
+      </div>
+      <span class="tt-book">${icon('wa')} Reservar plaza</span>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band light">
+  <div class="wrap cta-in">
+    <div class="cta-orn">${orn('loto', 'orn-breathe', 150)}</div>
+    <div>
+      <h2 class="split">Cuando me pases lo que falta, <em>la dejamos lista</em></h2>
+      <p class="reveal">Cualquier cambio de textos, colores o fotos lo ajustamos sin problema. 🌺</p>
+      <div class="cta-actions reveal"><a class="btn btn-glow btn-lg" href="index.html">Ver la web ${icon('arrow')}</a><a class="btn btn-dark btn-lg" href="#pendiente">Lo que falta</a></div>
+    </div>
+  </div>
+</section>`);
+
   /* ---------- 404 ---------- */
   add('404.html', { key: 'error', nav: '', title: 'Página no encontrada · Escuela de Yoga Cristina Herrera', desc: 'La página que buscas no existe.' }, `
 <section class="notfound dark" data-glow>

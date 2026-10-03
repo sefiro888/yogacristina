@@ -174,6 +174,7 @@
   /* ---------- 6. Cabecera ---------- */
   const header = $('.site-header');
   const bar = $('.header-progress span');
+  const dock = $('.dock');
   let lastY = scrollY;
   const onScrollHeader = () => {
     const y = scrollY;
@@ -185,6 +186,12 @@
       if (y > 520 && y > lastY + 6) header.classList.add('is-hidden');
       else if (y < lastY - 6 || y < 520) header.classList.remove('is-hidden');
     } else header.classList.remove('is-hidden');
+    // barra inferior del móvil: se esconde al bajar y vuelve al subir o al llegar al final
+    if (dock) {
+      const atEnd = y > max - 40;
+      if (y > 300 && y > lastY + 6 && !atEnd) { dock.classList.add('is-away'); root.classList.add('dock-away'); }
+      else if (y < lastY - 6 || y < 300 || atEnd) { dock.classList.remove('is-away'); root.classList.remove('dock-away'); }
+    }
     lastY = y;
   };
 
@@ -712,6 +719,24 @@
   if (demo) {
     demo.addEventListener('click', () => demo.setAttribute('aria-expanded', String(demo.getAttribute('aria-expanded') !== 'true')));
     document.addEventListener('click', e => { if (!demo.contains(e.target)) demo.setAttribute('aria-expanded', 'false'); });
+  }
+
+  /* ---------- 17e. Guía: lista de pendientes que se responde por WhatsApp ---------- */
+  const gc = $('[data-guide-check]');
+  if (gc) {
+    const boxes = $$('input[type=checkbox]', gc);
+    const count = $('[data-guide-count]', gc);
+    const upd = () => { count.textContent = boxes.filter(b => b.checked).length; };
+    gc.addEventListener('change', upd);
+    gc.addEventListener('submit', e => {
+      e.preventDefault();
+      const nota = String(new FormData(gc).get('nota') || '').trim();
+      const lines = boxes.map(b => `${b.checked ? '✅' : '⏳'} ${b.dataset.label}`);
+      const text = `¡Hola! 🙏 He visto la demo de la web. Esto es lo que tengo:\n${lines.join('\n')}${nota ? `\n\nCambios: ${nota}` : ''}`;
+      // sin número fijo: WhatsApp deja elegir a quién enviarlo
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+    });
+    upd();
   }
 
   /* ---------- 21. Botón flotante discreto junto al pie ---------- */
